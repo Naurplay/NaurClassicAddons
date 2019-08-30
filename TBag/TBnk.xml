@@ -1,0 +1,290 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"   xsi:schemaLocation="http://www.blizzard.com/wow/ui/">
+  <Script file="TBnk.lua"/>
+
+  <Frame name="TBnkFrame" inherits="TBag_MainTemplate">
+    <Frames>
+      <Button name="TBnk_Button_Close">
+        <Size><AbsDimension x="34" y="34"/></Size>
+        <NormalTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Up" />
+        <PushedTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Down" />
+        <HighlightTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Highlight" alphaMode="ADD" />
+        <Anchors>
+          <Anchor point="TOPRIGHT">
+            <Offset>
+              <AbsDimension x="0" y="0"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnClick>
+            TBnkFrame:Hide();
+          </OnClick>
+        </Scripts>
+      </Button>
+
+      <Button name="TBnk_Button_MoveLockToggle">
+        <Size><AbsDimension x="34" y="34"/></Size>
+        <NormalTexture name="TBnkLockNorm" />
+        <PushedTexture name="TBnkLockPush" />
+        <HighlightTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Highlight" alphaMode="ADD" />
+
+        <Anchors>
+          <Anchor point="TOPRIGHT" relativeTo="TBnk_Button_Close" relativePoint="TOPLEFT">
+            <Offset>
+              <AbsDimension x="10" y="0"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnClick>
+            TBnkFrame.Button_MoveLockToggle_OnClick(self, button, down);
+          </OnClick>
+          <OnEnter>
+            if (TBnkFrame.cfg["moveLock"] == 0) then
+              GameTooltip_AddNewbieTip(self, TBag.LOCALE["Unlock Window"], 1.0, 1.0, 1.0,
+                                       TBag.LOCALE["Allow window to be moved by dragging it."]);
+            else
+              GameTooltip_AddNewbieTip(self, TBag.LOCALE["Lock Window"], 1.0, 1.0, 1.0,
+                                       TBag.LOCALE["Prevent window from being moved by dragging it."]);
+            end
+          </OnEnter>
+          <OnLeave>
+            GameTooltip:Hide();
+            ResetCursor();
+          </OnLeave>
+        </Scripts>
+      </Button>
+
+      <Frame name="TBnk_UserDropdown" inherits="TBag_UserDropdownTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT">
+            <Offset>
+              <AbsDimension x="-10" y="-5"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnShow>
+            TBnkFrame.UserDropdown_OnLoad(self);
+          </OnShow>
+        </Scripts>
+      </Frame>
+
+
+      <Button name="TBnk_Button_HighlightToggle">
+        <Size><AbsDimension x="20" y="20"/></Size>
+        <NormalTexture file="Interface\Icons\INV_Misc_Gem_Pearl_04" />
+        <PushedTexture file="Interface\Icons\INV_Misc_Gem_Pearl_04" />
+        <HighlightTexture file="Interface\Icons\INV_Misc_Gem_Pearl_04" alphaMode="ADD" />
+        <Anchors>
+        <Anchor point="TOPLEFT" relativeTo="TBnk_UserDropdown" relativePoint="TOPRIGHT">
+            <Offset>
+              <AbsDimension x="15" y="-3"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnClick>
+            TBnkFrame.Button_HighlightToggle_OnClick(self, button, down);
+          </OnClick>
+          <OnEnter>
+            if (TBag.SrchText) then
+              GameTooltip_AddNewbieTip(self, TBag.LOCALE["Clear Search"], 1.0, 1.0, 1.0, TBag.LOCALE["Stop highlighting search results."]);
+            elseif (TBnkFrame.hilight_new == 0) then
+              GameTooltip_AddNewbieTip(self, TBag.LOCALE["Highlight New"], 1.0, 1.0, 1.0, TBag.LOCALE["Highlight items marked as new."]);
+            else
+              GameTooltip_AddNewbieTip(self, TBag.LOCALE["Normal"], 1.0, 1.0, 1.0, TBag.LOCALE["Stop highlighting new items."]);
+            end
+          </OnEnter>
+          <OnLeave>
+            GameTooltip:Hide();
+            ResetCursor();
+          </OnLeave>
+        </Scripts>
+      </Button>
+
+      <Button name="TBnk_Button_ChangeEditMode">
+        <Size><AbsDimension x="20" y="20"/></Size>
+        <NormalTexture file="Interface\Icons\Trade_Engineering" />
+        <PushedTexture file="Interface\Icons\Trade_Engineering" />
+        <HighlightTexture file="Interface\Icons\Trade_Engineering" alphaMode="ADD" />
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeTo="TBnk_Button_HighlightToggle" relativePoint="TOPRIGHT">
+            <Offset>
+              <AbsDimension x="2" y="0"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnClick>
+            TBnkFrame.Button_ChangeEditMode_OnClick(self, button, down);
+          </OnClick>
+          <OnEnter>
+            GameTooltip_AddNewbieTip(self, TBag.LOCALE["Toggle Edit Mode"], 1.0, 1.0, 1.0, TBag.LOCALE["Select this option to move classes of items into different 'bars' (the red numbers)."]);
+          </OnEnter>
+          <OnLeave>
+            GameTooltip:Hide();
+            ResetCursor();
+          </OnLeave>
+        </Scripts>
+      </Button>
+
+      <Button name="TBnk_Button_Reload">
+        <Size><AbsDimension x="20" y="20"/></Size>
+        <NormalTexture file="Interface\Icons\Spell_Frost_Stun" />
+        <PushedTexture file="Interface\Icons\Spell_Frost_Stun" />
+        <HighlightTexture file="Interface\Icons\Spell_Frost_Stun" alphaMode="ADD" />
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeTo="TBnk_Button_ChangeEditMode" relativePoint="TOPRIGHT">
+            <Offset>
+              <AbsDimension x="2" y="0"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnClick>
+            TBnkFrame.Button_Reload_OnClick(self, button, down);
+          </OnClick>
+          <OnEnter>
+            GameTooltip_AddNewbieTip(self, TBag.LOCALE["Reload and Sort"], 1.0, 1.0, 1.0, TBag.LOCALE["Reloads your items and sorts them."]);
+          </OnEnter>
+          <OnLeave>
+            GameTooltip:Hide();
+            ResetCursor();
+          </OnLeave>
+        </Scripts>
+      </Button>
+
+      <Button name="TBnk_Button_DepositReagent">
+        <Size><AbsDimension x="20" y="20"/></Size>
+        <NormalTexture file="Interface\Icons\INV_Misc_Bag_SatchelofCenarius.blp" />
+        <PushedTexture file="Interface\Icons\INV_Misc_Bag_SatchelofCenarius.blp" />
+        <HighlightTexture file="Interface\Icons\INV_Misc_Bag_SatchelofCenarius.blp" alphaMode="ADD" />
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeTo="TBnk_Button_Reload" relativePoint="TOPRIGHT">
+            <Offset>
+              <AbsDimension x="2" y="0"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnClick>
+            TBnkFrame.Button_DepositReagent_OnClick(self, button, down);
+          </OnClick>
+          <OnEnter>
+            GameTooltip_AddNewbieTip(self, REAGENTBANK_DEPOSIT, 1.0, 1.0, 1.0, TBag.LOCALE["Deposits all Reagents in your bag."]);
+          </OnEnter>
+          <OnLeave>
+            GameTooltip:Hide();
+            ResetCursor();
+          </OnLeave>
+        </Scripts>
+      </Button>
+
+      <CheckButton name="TBnkFrameBagBank" inherits="TBag_BagButtonTemplate" id="-1">
+        <Anchors>
+          <Anchor point="BOTTOMLEFT" relativeTo="$parent_Total" relativePoint="BOTTOMRIGHT">
+            <Offset>
+              <AbsDimension x="3" y="2"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnLoad>
+            TBag.BagButton.OnLoad(self)
+            self:SetID(BANK_CONTAINER)
+          </OnLoad>
+        </Scripts>
+      </CheckButton>
+      <CheckButton name="TBnkFrameBagReagent" inherits="TBag_BagButtonTemplate" id="-3">
+        <Anchors>
+          <Anchor point="LEFT" relativeTo="TBnkFrameBagBank" relativePoint="RIGHT">
+            <Offset>
+              <AbsDimension x="3" y="0"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnLoad>
+              self:Hide()
+          </OnLoad>
+        </Scripts>
+      </CheckButton>
+      <CheckButton name="TBnkFrameBag1" inherits="TBag_BagButtonTemplate" id="5">
+        <Anchors>
+          <Anchor point="LEFT" relativeTo="TBnkFrameBagReagent" relativePoint="RIGHT">
+            <Offset>
+              <AbsDimension x="3" y="0"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+      </CheckButton>
+      <CheckButton name="TBnkFrameBag2" inherits="TBag_BagButtonTemplate" id="6">
+        <Anchors>
+          <Anchor point="BOTTOMLEFT" relativeTo="TBnkFrameBag1" relativePoint="BOTTOMRIGHT">
+            <Offset>
+              <AbsDimension x="3" y="0"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+      </CheckButton>
+      <CheckButton name="TBnkFrameBag3" inherits="TBag_BagButtonTemplate" id="7">
+        <Anchors>
+          <Anchor point="BOTTOMLEFT" relativeTo="TBnkFrameBag2" relativePoint="BOTTOMRIGHT">
+            <Offset>
+              <AbsDimension x="3" y="0"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+      </CheckButton>
+      <CheckButton name="TBnkFrameBag4" inherits="TBag_BagButtonTemplate" id="8">
+        <Anchors>
+          <Anchor point="BOTTOMLEFT" relativeTo="TBnkFrameBag3" relativePoint="BOTTOMRIGHT">
+            <Offset>
+              <AbsDimension x="3" y="0"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+      </CheckButton>
+      <CheckButton name="TBnkFrameBag5" inherits="TBag_BagButtonTemplate" id="9">
+        <Anchors>
+          <Anchor point="BOTTOMLEFT" relativeTo="TBnkFrameBag4" relativePoint="BOTTOMRIGHT">
+            <Offset>
+              <AbsDimension x="3" y="0"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+      </CheckButton>
+      <CheckButton name="TBnkFrameBag6" inherits="TBag_BagButtonTemplate" id="10">
+        <Anchors>
+          <Anchor point="BOTTOMLEFT" relativeTo="TBnkFrameBag5" relativePoint="BOTTOMRIGHT">
+            <Offset>
+              <AbsDimension x="3" y="0"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+      </CheckButton>
+
+  <Frame name="TBnkainerFrame3" inherits="TBagainerFrameTemplate" id="0"/>
+  <Frame name="TBnkainerFrame4" inherits="TBagainerFrameTemplate" id="0"/>
+  <Frame name="TBnkainerFrame5" inherits="TBagainerFrameTemplate" id="5"/>
+  <Frame name="TBnkainerFrame6" inherits="TBagainerFrameTemplate" id="6"/>
+  <Frame name="TBnkainerFrame7" inherits="TBagainerFrameTemplate" id="7"/>
+  <Frame name="TBnkainerFrame8" inherits="TBagainerFrameTemplate" id="8"/>
+  <Frame name="TBnkainerFrame9" inherits="TBagainerFrameTemplate" id="9"/>
+  <Frame name="TBnkainerFrame10" inherits="TBagainerFrameTemplate" id="10"/>
+  <Frame name="TBnkainerFrame11" inherits="TBagainerFrameTemplate" id="11"/>
+
+      <Frame name="$parent_RightClickMenu" inherits="UIDropDownMenuTemplate" id="1" hidden="true">
+        <Scripts>
+          <OnLoad>
+            self:RegisterEvent("VARIABLES_LOADED");
+          </OnLoad>
+          <OnEvent>
+            TBag.Bank.RightClickMenu_OnLoad(self);
+          </OnEvent>
+        </Scripts>
+      </Frame>
+    </Frames>
+  </Frame>
+</Ui>

@@ -1,0 +1,29 @@
+## Interface: 11302
+## Title: TBag
+## Notes: The last bag addon you'll ever need.  Autosorting, viewable anywhere, easy to use yet amazingly configurable.
+## Notes-deDE: Das einzige Taschenaddon was du jemals brauchen wirst. Automatisches Sortieren, überall einsehbar, Benutzerfreundlich, dabei aber unglaublich gut Konfigurierbar.
+## Notes-ruRU: Модификация сумок. Возможности - авто-сортировка, просмотр сумок и банка в любом месте, легок в использовании, гибкие настройки.
+## Version: 1.13.2.2
+## X-Category: Inventory
+## Author: Talos, Modified by Shefki, Modified by GagStv
+## X-Email: shefki@shefki.org, gagst6@gmail.com
+## X-Website: https://www.curseforge.com/wow/addons/tbagclassic-gagstv
+## X-Feedback: https://www.curseforge.com/wow/addons/tbagclassic-gagstv
+## RequiredDeps:
+## OptionalDeps: Auctioneer
+## SavedVariables: TBagCfg, TBagInfo, TBnkItm, TInvItm, TContItm, TBodyItm, TMailItm, TTknItm
+## X-Localizations: enUS, deDE, ruRU
+## X-CompatibleLocales: enUS, deDE, ruRU
+##
+stub.lua
+localization.enUS.lua
+localization.deDE.lua
+localization.ruRU.lua
+defaults.lua
+TBag.xml
+Buttons.xml
+MainFrame.xml
+TInv.xml
+TInvOpts.xml
+TBnk.xml
+TBnkOpts.xml

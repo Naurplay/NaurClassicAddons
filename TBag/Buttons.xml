@@ -1,0 +1,199 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/">
+  <Script file="Buttons.lua"/>
+
+    <Button name="TBag_EditButtonTemplate" hidden="true" virtual="true" setAllPoints="true">
+      <Size><AbsDimension x="40" y="40"/></Size>
+      <Scripts>
+        <OnLoad>
+          self:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+        </OnLoad>
+        <OnClick>
+          TBag.ItemButton.OnClick(self, button, down);
+        </OnClick>
+        <OnEnter>
+          TBag.ItemButton.OnEnter(self, motion);
+        </OnEnter>
+        <OnLeave>
+          TBag.ItemButton.OnLeave(self, motion);
+        </OnLeave>
+      </Scripts>
+    </Button>
+
+    <Button name="TBag_ItemButtonTemplate" inherits="ContainerFrameItemButtonTemplate" hidden="true" virtual="true">
+      <Size><AbsDimension x="40" y="40"/></Size>
+      <Frames>
+        <Button name="$parent_EditButton" inherits="TBag_EditButtonTemplate"/>
+        <Frame name="$parentHighlightFrame" setAllPoints="true">
+          <Layers>
+            <Layer>
+              <Texture name="$parentTexture" alphaMode="ADD" file="Interface\Buttons\CheckButtonHilight" setAllPoints="true" hidden="true"/>
+          </Layer>
+        </Layers>
+      </Frame>
+    </Frames>
+    <Layers>
+      <Layer frameStrata="BORDER">
+        <Texture name="$parent_bkgr" inherits="TBag_ButtonBkgrTemplate"/>
+      </Layer>
+    </Layers>
+    <Scripts>
+      <OnLoad>
+        ContainerFrameItemButton_OnLoad(self);
+        self.UpdateTooltip = TBag.ItemButton.OnEnter;
+        local newitem = _G[self:GetName() .. "NewItemTexture"]
+        if newitem then
+          newitem:Hide();
+        end
+        local battlepay = _G[self:GetName()].BattlepayItemTexture;
+        if battlepay then
+          battlepay:Hide();
+        end
+      </OnLoad>
+      <OnEnter>
+        TBag.ItemButton.OnEnter(self, motion);
+      </OnEnter>
+      <OnLeave>
+        TBag.ItemButton.OnLeave(self, motion);
+      </OnLeave>
+    </Scripts>
+  </Button>
+
+  <Button name="TBag_BarButtonTemplate" inherits="ItemButtonTemplate" hidden="true" virtual="true">
+    <Size><AbsDimension x="40" y="40"/></Size>
+    <Layers>
+      <Layer frameStrata="BORDER">
+        <Texture name="$parent_bkgr" inherits="TBag_ButtonBkgrTemplate"/>
+      </Layer>
+    </Layers>
+    <Scripts>
+      <OnLoad>
+        TBag.BarButton.OnLoad(self)
+      </OnLoad>
+      <OnClick>
+        TBag.BarButton.OnClick(self, button, down)
+      </OnClick>
+      <OnEnter>
+        TBag.BarButton.OnEnter(self, motion)
+      </OnEnter>
+      <OnLeave>
+        TBag.BarButton.OnLeave(self, motion)
+      </OnLeave>
+    </Scripts>
+  </Button>
+
+  <CheckButton name="TBag_BagButtonTemplate" inherits="ItemButtonTemplate" virtual="true">
+    <Frames>
+      <Frame name="$parentSpotlight" setAllPoints="true">
+        <Layers>
+          <Layer>
+            <Texture name="$parentTexture" alphaMode="ADD" file="Interface\Buttons\CheckButtonHilight" setAllPoints="true" hidden="true"/>
+          </Layer>
+        </Layers>
+      </Frame>
+      <Model name="$parentItemAnim" inherits="ItemAnimTemplate" setAllPoints="true">
+        <Scripts>
+          <OnEvent>
+            TBag.BagButton.ItemAnimOnEvent(self,event,...)
+          </OnEvent>
+        </Scripts>
+      </Model>
+    </Frames>
+    <CheckedTexture alphaMode="ADD" file="Interface\Buttons\CheckButtonHilight"/>
+    <Scripts>
+      <OnLoad>
+        TBag.BagButton.OnLoad(self)
+      </OnLoad>
+      <OnEnter>
+        TBag.BagButton.OnEnter(self)
+      </OnEnter>
+      <OnLeave>
+        TBag.BagButton.OnLeave(self)
+      </OnLeave>
+      <OnClick>
+        TBag.BagButton.OnClick(self,button,down,false)
+      </OnClick>
+      <OnDragStart>
+        TBag.BagButton.OnDrag(self,button)
+      </OnDragStart>
+      <OnReceiveDrag>
+        TBag.BagButton.OnClick(self,"LeftButton",false,true)
+      </OnReceiveDrag>
+    </Scripts>
+  </CheckButton>
+
+  <Frame name="TBag_TotalTemplate" virtual="true">
+    <Size><AbsDimension x="28" y="28"/></Size>
+    <Layers>
+      <Layer level="ARTWORK">
+        <FontString name="$parentText" font="Fonts\ARIALN.TTF" justifyH="CENTER" outline="NORMAL">
+          <Anchors>
+            <Anchor point="CENTER"/>
+          </Anchors>
+          <FontHeight><AbsValue val="18"/></FontHeight>
+          <Color r="1" g="0" b="0.25"/>
+        </FontString>
+      </Layer>
+    </Layers>
+  </Frame>
+
+  <Button name="TBag_ColumnsButtonTemplate" inherits="GameMenuButtonTemplate" virtual="true">
+    <Size><AbsDimension x="45" y="22"/></Size>
+    <Anchors>
+      <Anchor point="BOTTOM" relativePoint="BOTTOM">
+        <Offset><AbsDimension x="0" y="5"/></Offset>
+      </Anchor>
+    </Anchors>
+    <Scripts>
+      <OnLoad>
+        TBag.ColumnsButton.OnLoad(self)
+      </OnLoad>
+      <OnClick>
+        TBag.ColumnsButton.OnClick(self,button,down)
+      </OnClick>
+      <OnEnter>
+        TBag.ColumnsButton.OnEnter(self)
+      </OnEnter>
+      <OnLeave>
+        TBag.ColumnsButton.OnLeave(self)
+      </OnLeave>
+    </Scripts>
+  </Button>
+
+  <Button name="TBag_CloseTemplate" virtual="true">
+    <Size><AbsDimension x="34" y="34"/></Size>
+    <NormalTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Up"/>
+    <PushedTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Down"/>
+    <HighlightTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Highlight" alphaMode="ADD"/>
+    <Scripts>
+      <OnClick>
+        self:GetParent():Close()
+      </OnClick>
+    </Scripts>
+  </Button>
+
+  <Button name="TBag_MoveLockTemplate" virtual="true">
+    <Size><AbsDimension x="34" y="34"/></Size>
+    <NormalTexture name="$parent_NormTexture"/>
+    <PushedTexture name="$parent_PushTexture"/>
+    <HighlightTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Highlight" alphaMode="ADD"/>
+    <Scripts>
+      <OnClick>
+        self:GetParent():Button_MoveLockToggle_OnClick(button, down)
+      </OnClick>
+      <OnEnter>
+        if self:GetParent().cfg.moveLock == 0 then
+          GameTooltip_AddNewbieTip(self, TBag.LOCALE["Unlock Window"], 1.0, 1.0, 1.0,
+            TBag.LOCALE["Allow window to be moved by dragging it."])
+        else
+          GameTooltip_AddNewbieTip(self, TBag.LOCALE["Lock Window"], 1.0, 1.0, 1.0,
+            TBag.LOCALE["Prevent window from being moved by dragging it."])
+        end
+      </OnEnter>
+      <OnLeave>
+        GameTooltip:Hide();
+        ResetCursor();
+      </OnLeave>
+    </Scripts>
+  </Button>
+
+</Ui>

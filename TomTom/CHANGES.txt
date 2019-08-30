@@ -1,0 +1,10 @@
+lightweight tag 4228d5e42980ece74d233222ccf4a120a7dab1c1 v11302-1.0.7
+Author:	Ludovicus <ludovicus.maior@gmail.com>
+Date:	Sun Aug 25 15:06:44 2019 -0400
+
+commit 4228d5e42980ece74d233222ccf4a120a7dab1c1
+Author: Ludovicus <ludovicus.maior@gmail.com>
+Date:   Sun Aug 25 15:06:44 2019 -0400
+
+    Add Interface for Classic.
+

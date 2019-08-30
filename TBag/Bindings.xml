@@ -1,0 +1,8 @@
+<Bindings>
+  <Binding name="TINV_TOGGLE" header="TBag" category="ADDONS">
+    TInvFrame:Toggle();
+  </Binding>
+  <Binding name="TBNK_TOGGLE" category="ADDONS">
+    TBnkFrame:Toggle();
+  </Binding>
+</Bindings>

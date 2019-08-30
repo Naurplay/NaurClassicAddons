@@ -1,0 +1,89 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"   xsi:schemaLocation="http://www.blizzard.com/wow/ui/">
+  <Script file="TBag.lua"/>
+  <Script file="TBagCmd.lua"/>
+  <Script file="Hooks.lua"/>
+  <Script file="TBagOpt.lua"/>
+  <Script file="Events.lua"/>
+  <Script file="TBagTest.lua"/>
+
+  <Texture name="TBag_ButtonBkgrTemplate" alphaMode="ADD" file="Interface\AddOns\TBag\images\ButtonBkgr" setAllPoints="true" virtual="true">
+    <Size>
+      <AbsDimension x="64" y="64"/>
+    </Size>
+  </Texture>
+
+  <Frame name="TBagainerFrameTemplate" frameStrata="MEDIUM" enableMouse="true" virtual="true">
+    <Size>
+      <AbsDimension x="40" y="40"/>
+    </Size>
+  </Frame>
+
+  <Frame name="TBag_BarFrameTemplate" toplevel="false" frameStrata="MEDIUM" movable="false" enableMouse="false" hidden="true" virtual="true">
+    <Size><AbsDimension x="200" y="46"/></Size>
+    <Anchors>
+      <Anchor point="BOTTOMRIGHT">
+        <Offset>
+          <AbsDimension x="0" y="0"/>
+        </Offset>
+      </Anchor>
+    </Anchors>
+
+    <Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+      <EdgeSize>
+        <AbsValue val="4"/>
+      </EdgeSize>
+      <TileSize>
+        <AbsValue val="4"/>
+      </TileSize>
+      <BackgroundInsets>
+        <AbsInset left="2" right="2" top="2" bottom="2"/>
+      </BackgroundInsets>
+    </Backdrop>
+  </Frame>
+
+  <Frame name="TBag_UserDropdownTemplate" inherits="UIDropDownMenuTemplate" enableMouse="true" virtual="true">
+  <Scripts>
+    <OnEnter>
+      GameTooltip:SetOwner(self, "ANCHOR_TOPRIGHT");
+      GameTooltip:SetText(self.tooltip, nil, nil, nil, nil, 1);
+    </OnEnter>
+    <OnLeave>
+      GameTooltip:Hide();
+      ResetCursor();
+    </OnLeave>
+  </Scripts>
+  </Frame>
+
+  <EditBox name="TBag_SearchBoxTemplate" inherits="InputBoxTemplate" hidden="false" virtual="true" autoFocus="false">
+    <Size><AbsDimension x="198" y="30"/></Size>
+    <Scripts>
+      <OnShow>
+        TBag:ClearSearch();
+      </OnShow>
+      <OnTabPressed>
+        self:ClearFocus();
+      </OnTabPressed>
+      <OnEscapePressed>
+        self:ClearFocus();
+      </OnEscapePressed>
+      <OnEnterPressed>
+        if (self:GetText() ~= "") then
+          TBag:DoSearch(self:GetText());
+        end
+        self:ClearFocus();
+      </OnEnterPressed>
+      <OnEditFocusLost>
+        self:HighlightText(0, 0);
+        if ( self:GetText() == "" ) then
+          TBag:ClearSearch();
+        end
+      </OnEditFocusLost>
+      <OnEditFocusGained>
+        self:HighlightText(0, 0);
+        if ( self:GetText() == SEARCH ) then
+          self:SetText("");
+        end
+      </OnEditFocusGained>
+    </Scripts>
+  </EditBox>
+</Ui>

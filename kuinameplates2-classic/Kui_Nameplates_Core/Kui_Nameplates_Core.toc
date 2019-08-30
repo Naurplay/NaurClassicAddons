@@ -1,0 +1,13 @@
+## Interface: 80100
+## Author: Kesava
+## Title: Kui |cff9966ffNameplates:|r |cffffffffCore|r
+## Notes: The official layout for Kui Nameplates.
+## Dependencies: Kui_Nameplates
+## SavedVariables: KuiNameplatesCoreSaved
+## SavedVariablesPerCharacter: KuiNameplatesCoreCharacterSaved
+
+lib\embeds.xml
+
+hook.lua
+create.lua
+config.lua

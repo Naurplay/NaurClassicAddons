@@ -1,0 +1,14 @@
+﻿## Interface: 80200
+## Title: Dominos Progress
+## Notes: Progress bars of all sorts
+## Author: Tuller
+## Dependencies: Dominos
+localization.xml
+config.lua
+main.lua
+progressBar.lua
+xpBar.lua
+reputationBar.lua
+artifactBar.lua
+azeriteBar.lua
+honorBar.lua

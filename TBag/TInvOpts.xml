@@ -1,0 +1,301 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/">
+  <Script file="TInvOpts.lua"/>
+
+  <Slider name="TInv_SliderTemplate" orientation="HORIZONTAL" virtual="true" enableMouse="true">
+    <Size>
+      <AbsDimension x="128" y="17"/>
+    </Size>
+    <Backdrop bgFile="Interface\Buttons\UI-SliderBar-Background" edgeFile="Interface\Buttons\UI-SliderBar-Border" tile="true">
+      <EdgeSize>
+        <AbsValue val="8"/>
+      </EdgeSize>
+      <TileSize>
+        <AbsValue val="8"/>
+      </TileSize>
+      <BackgroundInsets>
+        <AbsInset left="3" right="3" top="6" bottom="6"/>
+      </BackgroundInsets>
+    </Backdrop>
+    <Scripts>
+      <OnEnter>
+        local this = self or _G.this     
+        if ( this.tooltipText ) then
+          GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+          GameTooltip:SetText(this.tooltipText, nil, nil, nil, nil, 1);
+        end
+        if ( this.tooltipRequirement ) then
+          GameTooltip:AddLine(this.tooltipRequirement, "", 1.0, 1.0, 1.0);
+          GameTooltip:Show();
+        end
+      </OnEnter>
+      <OnLeave>
+        GameTooltip:Hide();
+      </OnLeave>
+      <OnValueChanged>
+        local this = self or _G.this     
+        local arg1 = value or _G.arg1
+        arg1 = TInv_Opts_ControlValueChanged(this,arg1);
+        _G[this:GetName().."_disp_text"]:SetText( arg1 );
+      </OnValueChanged>
+    </Scripts>
+    <ThumbTexture name="$parentThumb" file="Interface\Buttons\UI-SliderBar-Button-Horizontal">
+      <Size><AbsDimension x="32" y="32"/></Size>
+    </ThumbTexture>
+    <Layers level="OVERLAY">
+      <Layer>
+        <FontString name="$parent_disp_text" inherits="GameFontNormalSmall"/>
+      </Layer>
+    </Layers>
+  </Slider>
+
+  <EditBox name="TInv_InputBoxTemplate" inherits="InputBoxTemplate" virtual="true" autoFocus="false">
+    <Scripts>
+      <OnTabPressed>
+        local this = self or _G.this     
+        this:ClearFocus();
+      </OnTabPressed>
+      <OnEnterPressed>
+        local this = self or _G.this     
+        this:ClearFocus();
+      </OnEnterPressed>
+      <OnTextChanged>
+        local this = self or _G.this     
+        TInv_Opts_ControlValueChanged(this,this:GetText());
+      </OnTextChanged>
+    </Scripts>
+  </EditBox>
+
+  <Button name="TInv_Opts_ButtonTemplate" inherits="GameMenuButtonTemplate" virtual="true" hidden="true">
+    <Scripts>
+      <OnClick>
+        local this = self or _G.this 
+        TInv_Opts_ControlValueChanged(this);
+      </OnClick>
+    </Scripts>
+  </Button>
+
+  <Frame name="TInv_Opts_LineTemplate" enableMouse="true" hidden="true" virtual="true">
+    <Layers>
+      <Layer level="ARTWORK">
+        <FontString name="$parent_Text_1" inherits="GameFontNormalSmall"/>
+        <FontString name="$parent_Text_2" inherits="GameFontNormalSmall"/>
+        <FontString name="$parent_Text_3" inherits="GameFontNormalSmall"/>
+        <FontString name="$parent_Text_4" inherits="GameFontNormalSmall"/>
+        <FontString name="$parent_Text_5" inherits="GameFontNormalSmall"/>
+        <FontString name="$parent_Text_6" inherits="GameFontNormalSmall"/>
+        <FontString name="$parent_Text_7" inherits="GameFontNormalSmall"/>
+        <FontString name="$parent_Text_8" inherits="GameFontNormalSmall"/>
+      </Layer>
+    </Layers>
+    <Frames>
+      <Slider name="$parent_Slider_1" inherits="TInv_SliderTemplate"/>
+      <Slider name="$parent_Slider_2" inherits="TInv_SliderTemplate"/>
+      <Slider name="$parent_Slider_3" inherits="TInv_SliderTemplate"/>
+      <Slider name="$parent_Slider_4" inherits="TInv_SliderTemplate"/>
+      <EditBox name="$parent_Edit_1" inherits="TInv_InputBoxTemplate"/>
+      <EditBox name="$parent_Edit_2" inherits="TInv_InputBoxTemplate"/>
+      <EditBox name="$parent_Edit_3" inherits="TInv_InputBoxTemplate"/>
+      <EditBox name="$parent_Edit_4" inherits="TInv_InputBoxTemplate"/>
+      <EditBox name="$parent_Edit_5" inherits="TInv_InputBoxTemplate"/>
+      <EditBox name="$parent_Edit_6" inherits="TInv_InputBoxTemplate"/>
+      <Button name="$parent_Button_1" inherits="TInv_Opts_ButtonTemplate"/>
+      <Button name="$parent_Button_2" inherits="TInv_Opts_ButtonTemplate"/>
+      <Button name="$parent_Button_3" inherits="TInv_Opts_ButtonTemplate"/>
+      <Button name="$parent_Button_4" inherits="TInv_Opts_ButtonTemplate"/>
+
+      <Button name="$parent_UpButton_1" inherits="TInv_Opts_ButtonTemplate">
+        <NormalTexture inherits="UIPanelScrollBarButton" file="Interface\Buttons\UI-ScrollBar-ScrollUpButton-Up"/>
+        <PushedTexture inherits="UIPanelScrollBarButton" file="Interface\Buttons\UI-ScrollBar-ScrollUpButton-Down"/>
+        <DisabledTexture inherits="UIPanelScrollBarButton" file="Interface\Buttons\UI-ScrollBar-ScrollUpButton-Disabled"/>
+        <HighlightTexture inherits="UIPanelScrollBarButton" file="Interface\Buttons\UI-ScrollBar-ScrollUpButton-Highlight" alphaMode="ADD"/>
+      </Button>
+
+      <Button name="$parent_DownButton_1" inherits="TInv_Opts_ButtonTemplate">
+        <NormalTexture inherits="UIPanelScrollBarButton" file="Interface\Buttons\UI-ScrollBar-ScrollDownButton-Up"/>
+        <PushedTexture inherits="UIPanelScrollBarButton" file="Interface\Buttons\UI-ScrollBar-ScrollDownButton-Down"/>
+        <DisabledTexture inherits="UIPanelScrollBarButton" file="Interface\Buttons\UI-ScrollBar-ScrollDownButton-Disabled"/>
+        <HighlightTexture inherits="UIPanelScrollBarButton" file="Interface\Buttons\UI-ScrollBar-ScrollDownButton-Highlight" alphaMode="ADD"/>
+      </Button>
+
+    </Frames>
+  </Frame>
+
+  <Frame name="TInv_OptsFrame" toplevel="true" frameStrata="MEDIUM" movable="true" enableMouse="true" hidden="true" parent="UIParent">
+    <Size><AbsDimension x="800" y="500"/></Size>
+    <Anchors>
+      <Anchor point="CENTER">
+        <Offset>
+          <AbsDimension x="0" y="0"/>
+        </Offset>
+      </Anchor>
+    </Anchors>
+
+    <Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+      <EdgeSize>
+        <AbsValue val="8"/>
+      </EdgeSize>
+      <TileSize>
+        <AbsValue val="8"/>
+      </TileSize>
+      <BackgroundInsets>
+        <AbsInset left="2" right="2" top="2" bottom="2"/>
+      </BackgroundInsets>
+    </Backdrop>
+
+    <Frames>
+      <Slider name="TInv_OptsFrame_ScrollBar" inherits="UIPanelScrollBarTemplate">
+        <Scripts>
+          <OnValueChanged>
+            local arg1 = value or _G.arg1      
+            TInv_Opts_CurrentPosition = arg1;
+            TInv_Options_UpdateWindow();
+          </OnValueChanged>
+        </Scripts>
+      </Slider>
+      <Frame name="TInv_OptsFrame_Line_1" inherits="TInv_Opts_LineTemplate"/>
+      <Frame name="TInv_OptsFrame_Line_2" inherits="TInv_Opts_LineTemplate"/>
+      <Frame name="TInv_OptsFrame_Line_3" inherits="TInv_Opts_LineTemplate"/>
+      <Frame name="TInv_OptsFrame_Line_4" inherits="TInv_Opts_LineTemplate"/>
+      <Frame name="TInv_OptsFrame_Line_5" inherits="TInv_Opts_LineTemplate"/>
+      <Frame name="TInv_OptsFrame_Line_6" inherits="TInv_Opts_LineTemplate"/>
+      <Frame name="TInv_OptsFrame_Line_7" inherits="TInv_Opts_LineTemplate"/>
+      <Frame name="TInv_OptsFrame_Line_8" inherits="TInv_Opts_LineTemplate"/>
+      <Frame name="TInv_OptsFrame_Line_9" inherits="TInv_Opts_LineTemplate"/>
+      <Frame name="TInv_OptsFrame_Line_10" inherits="TInv_Opts_LineTemplate"/>
+      <Frame name="TInv_OptsFrame_Line_11" inherits="TInv_Opts_LineTemplate"/>
+      <Frame name="TInv_OptsFrame_Line_12" inherits="TInv_Opts_LineTemplate"/>
+      <Frame name="TInv_OptsFrame_Line_13" inherits="TInv_Opts_LineTemplate"/>
+      <Frame name="TInv_OptsFrame_Line_14" inherits="TInv_Opts_LineTemplate"/>
+      <Frame name="TInv_OptsFrame_Line_15" inherits="TInv_Opts_LineTemplate"/>
+      <Frame name="TInv_OptsFrame_Line_16" inherits="TInv_Opts_LineTemplate"/>
+      <Frame name="TInv_OptsFrame_Line_17" inherits="TInv_Opts_LineTemplate"/>
+      <Frame name="TInv_OptsFrame_Line_18" inherits="TInv_Opts_LineTemplate"/>
+      <Frame name="TInv_OptsFrame_Line_19" inherits="TInv_Opts_LineTemplate"/>
+      <Frame name="TInv_OptsFrame_Line_20" inherits="TInv_Opts_LineTemplate"/>
+      <Frame name="TInv_OptsFrame_Line_21" inherits="TInv_Opts_LineTemplate"/>
+      <Frame name="TInv_OptsFrame_Line_22" inherits="TInv_Opts_LineTemplate"/>
+      <Frame name="TInv_OptsFrame_Line_23" inherits="TInv_Opts_LineTemplate"/>
+      <Frame name="TInv_OptsFrame_Line_24" inherits="TInv_Opts_LineTemplate"/>
+      <Frame name="TInv_OptsFrame_Line_25" inherits="TInv_Opts_LineTemplate"/>
+
+      <Button name="TInv_OptsFrame_Button_Reset" inherits="GameMenuButtonTemplate" text="Reset">
+        <Size><AbsDimension x="60" y="25"/></Size>
+        <Anchors>
+          <Anchor point="BOTTOMLEFT">
+            <Offset>
+              <AbsDimension x="5" y="2"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnLoad>
+            local this = self or _G.this     
+            this:SetText(TBag.LOCALE["Reset"]);
+          </OnLoad>
+          <OnClick>
+            TBagCfg["Inv"] = {};
+            TInv_init(1);
+            TInvOpt_ResizeUpdate();
+            TInv_Options_UpdateWindow();
+          </OnClick>
+        </Scripts>
+      </Button>
+      <Button name="TInv_OptsFrame_Button_Close" inherits="GameMenuButtonTemplate" text="Close">
+        <Size><AbsDimension x="70" y="25"/></Size>
+        <Anchors>
+          <Anchor point="BOTTOM">
+            <Offset>
+              <AbsDimension x="0" y="2"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnLoad>
+            local this = self or _G.this     
+            this:SetText(TBag.LOCALE["Close"]);
+          </OnLoad>
+          <OnClick>
+            TInv_OptsFrame:Hide();
+          </OnClick>
+        </Scripts>
+      </Button>
+      <Button name="TInv_OptsFrame_Button_AddCat" inherits="GameMenuButtonTemplate" text="Add New Cat">
+        <Size><AbsDimension x="130" y="25"/></Size>
+        <Anchors>
+          <Anchor point="BOTTOMRIGHT">
+            <Offset>
+              <AbsDimension x="-30" y="2"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnLoad>
+            local this = self or _G.this     
+            this:SetText(TBag.LOCALE["Add New Cat"]);
+          </OnLoad>
+          <OnClick>
+            TInvOpts_AddCat();
+          </OnClick>
+        </Scripts>
+      </Button>
+      <Button name="TInv_OptsFrame_Button_AssignCat" inherits="GameMenuButtonTemplate" text="Assign Cats">
+        <Size><AbsDimension x="120" y="25"/></Size>
+        <Anchors>
+          <Anchor point="RIGHT" relativePoint="LEFT" relativeTo="TInv_OptsFrame_Button_AddCat">
+            <Offset>
+              <AbsDimension x="-5" y="0"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnLoad>
+            local this = self or _G.this     
+            this:SetText(TBag.LOCALE["Assign Cats"]);
+          </OnLoad>
+          <OnClick>
+            TBag:AssignCats(TInvFrame.cfg, 1);
+            TBag:BuildBarClassList(TInvFrame.BC_LIST, TInvFrame.cfg);
+          </OnClick>
+        </Scripts>
+      </Button>
+
+    </Frames>
+
+    <Scripts>
+      <OnMouseDown>
+        local this = self or _G.this     
+        local arg1 = button or _G.arg1
+        if ( arg1 == "LeftButton" ) then
+          if (not this.isMoving) then
+              this:StartMoving();
+              this.isMoving = true;
+          end
+        end
+      </OnMouseDown>
+      <OnMouseUp>
+        local this = self or _G.this     
+        if (this.isMoving) then
+                  this:StopMovingOrSizing();
+                  this.isMoving = false;
+        end
+      </OnMouseUp>
+      <OnDragStart>
+        local this = self or _G.this     
+        if (not this.isMoving) then
+            this:StartMoving();
+            this.isMoving = true;
+        end
+      </OnDragStart>
+      <OnDragStop>
+        local this = self or _G.this     
+        if (this.isMoving) then
+                  this:StopMovingOrSizing();
+                  this.isMoving = false;
+        end
+      </OnDragStop>
+      <OnShow>
+        TInv_Options_InitWindow();
+      </OnShow>
+    </Scripts>
+  </Frame>
+</Ui>

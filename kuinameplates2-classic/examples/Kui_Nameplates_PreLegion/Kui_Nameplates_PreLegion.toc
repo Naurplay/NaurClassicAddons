@@ -1,0 +1,8 @@
+## Interface: 70300
+## Author: Kesava
+## Title: Kui |cff9966ffNameplates|r PreLegion
+## Notes: Pre-legion nameplate layout for Kui_Nameplates.
+## Dependencies: Kui_Nameplates
+
+hook.lua
+create.lua

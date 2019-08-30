@@ -1,0 +1,21 @@
+* 1.2
+    - Fixed an issue where importing a sequence that includes talents you already know would not properly adjust the scroll bar
+
+* 1.1
+    - Won't try to import if the url is for a different class
+    
+* 1.0
+    - Fixed rank text being slightly offset
+    - Support more versions of Bobo-Talent urls
+
+* 0.1-beta
+    - Fixed icons of not known talents being desaturated
+
+* 0.3-alpha
+    - Now works in Classic Beta, thanks to /u/mrdarkey and /u/lentus
+
+* 0.2-alpha
+    - Fix Classic not having the "ItemButton" frame type
+
+* 0.1-alpha
+    - Intial Release

@@ -1,0 +1,13 @@
+## Interface: 80200
+## Title: OmniCC
+## Notes: Cooldown count for everything
+## Notes-koKR: 모든 것을 위한 쿨다운 카운트
+## Author: Tuller
+## Version: 8.2.4
+## SavedVariables: OmniCC4Config
+libs\libs.xml
+localization\localization.xml
+main.lua
+core\core.xml
+settings\settings.xml
+effects\effects.xml
